@@ -1,0 +1,393 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
+
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "FreeGuiByYuroxh"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.Parent = playerGui
+
+local MainFrame = Instance.new("Frame")
+MainFrame.Name = "MainFrame"
+MainFrame.Size = UDim2.new(0, 360, 0, 240)
+MainFrame.Position = UDim2.new(0.5, -180, 0.5, -120)
+MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+MainFrame.BackgroundTransparency = 0.05
+MainFrame.BorderSizePixel = 0
+MainFrame.ZIndex = 10
+MainFrame.Parent = ScreenGui
+
+local MainStroke = Instance.new("UIStroke")
+MainStroke.Color = Color3.fromRGB(255, 255, 255)
+MainStroke.Thickness = 2
+MainStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+MainStroke.Parent = MainFrame
+
+local MainCorner = Instance.new("UICorner")
+MainCorner.CornerRadius = UDim.new(0, 10)
+MainCorner.Parent = MainFrame
+
+local TitleBar = Instance.new("Frame")
+TitleBar.Name = "TitleBar"
+TitleBar.Size = UDim2.new(1, 0, 0, 30)
+TitleBar.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+TitleBar.BorderSizePixel = 0
+TitleBar.ZIndex = 11
+TitleBar.Parent = MainFrame
+
+local TitleCorner = Instance.new("UICorner")
+TitleCorner.CornerRadius = UDim.new(0, 10)
+TitleCorner.Parent = TitleBar
+
+local TitleText = Instance.new("TextLabel")
+TitleText.Size = UDim2.new(1, -80, 1, 0)
+TitleText.Position = UDim2.new(0, 12, 0, 0)
+TitleText.BackgroundTransparency = 1
+TitleText.Text = "free gui by yuroxh"
+TitleText.TextColor3 = Color3.fromRGB(255, 255, 255)
+TitleText.TextSize = 14
+TitleText.Font = Enum.Font.GothamBold
+TitleText.TextXAlignment = Enum.TextXAlignment.Left
+TitleText.ZIndex = 12
+TitleText.Parent = TitleBar
+
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Size = UDim2.new(0, 26, 0, 26)
+CloseBtn.Position = UDim2.new(1, -32, 0.5, -13)
+CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+CloseBtn.Text = "X"
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.TextSize = 12
+CloseBtn.Font = Enum.Font.GothamBold
+CloseBtn.ZIndex = 12
+CloseBtn.Parent = TitleBar
+
+local CloseCorner = Instance.new("UICorner")
+CloseCorner.CornerRadius = UDim.new(0, 6)
+CloseCorner.Parent = CloseBtn
+
+local VideoFrame = Instance.new("VideoFrame")
+VideoFrame.Name = "VideoFrame"
+VideoFrame.Size = UDim2.new(1, -20, 1, -45)
+VideoFrame.Position = UDim2.new(0, 10, 0, 38)
+VideoFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+VideoFrame.BorderSizePixel = 0
+VideoFrame.ZIndex = 10
+VideoFrame.Parent = MainFrame
+
+local VideoCorner = Instance.new("UICorner")
+VideoCorner.CornerRadius = UDim.new(0, 8)
+VideoCorner.Parent = VideoFrame
+
+VideoFrame.Video = "rbxassetid://5608402438"
+VideoFrame.Looped = true
+VideoFrame.Volume = 0.5
+
+local TabContainer = Instance.new("Frame")
+TabContainer.Name = "TabContainer"
+TabContainer.Size = UDim2.new(0, 80, 1, -45)
+TabContainer.Position = UDim2.new(0, 10, 0, 38)
+TabContainer.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+TabContainer.BackgroundTransparency = 0.3
+TabContainer.BorderSizePixel = 0
+TabContainer.ZIndex = 15
+TabContainer.Visible = false
+TabContainer.Parent = MainFrame
+
+local TabContainerCorner = Instance.new("UICorner")
+TabContainerCorner.CornerRadius = UDim.new(0, 8)
+TabContainerCorner.Parent = TabContainer
+
+local TabContainerStroke = Instance.new("UIStroke")
+TabContainerStroke.Color = Color3.fromRGB(255, 255, 255)
+TabContainerStroke.Thickness = 1
+TabContainerStroke.Parent = TabContainer
+
+local TabLayout = Instance.new("UIListLayout")
+TabLayout.FillDirection = Enum.FillDirection.Vertical
+TabLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+TabLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+TabLayout.Padding = UDim.new(0, 6)
+TabLayout.Parent = TabContainer
+
+local TabPadding = Instance.new("UIPadding")
+TabPadding.PaddingTop = UDim.new(0, 8)
+TabPadding.PaddingBottom = UDim.new(0, 8)
+TabPadding.Parent = TabContainer
+
+local tabButtons = {}
+local tabContents = {}
+
+for i = 1, 4 do
+    local tabBtn = Instance.new("TextButton")
+    tabBtn.Name = "Button" .. i
+    tabBtn.Size = UDim2.new(0, 65, 0, 35)
+    tabBtn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+    tabBtn.Text = "Button " .. i
+    tabBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    tabBtn.TextSize = 11
+    tabBtn.Font = Enum.Font.GothamBold
+    tabBtn.ZIndex = 16
+    tabBtn.Parent = TabContainer
+
+    local tabBtnCorner = Instance.new("UICorner")
+    tabBtnCorner.CornerRadius = UDim.new(0, 6)
+    tabBtnCorner.Parent = tabBtn
+
+    local tabBtnStroke = Instance.new("UIStroke")
+    tabBtnStroke.Color = Color3.fromRGB(255, 255, 255)
+    tabBtnStroke.Thickness = 1
+    tabBtnStroke.Parent = tabBtn
+
+    table.insert(tabButtons, tabBtn)
+
+    local tabContent = Instance.new("Frame")
+    tabContent.Name = "TabContent" .. i
+    tabContent.Size = UDim2.new(1, -100, 1, -45)
+    tabContent.Position = UDim2.new(0, 95, 0, 38)
+    tabContent.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+    tabContent.BackgroundTransparency = 0.1
+    tabContent.BorderSizePixel = 0
+    tabContent.ZIndex = 14
+    tabContent.Visible = false
+    tabContent.Parent = MainFrame
+
+    local contentCorner = Instance.new("UICorner")
+    contentCorner.CornerRadius = UDim.new(0, 8)
+    contentCorner.Parent = tabContent
+
+    local contentStroke = Instance.new("UIStroke")
+    contentStroke.Color = Color3.fromRGB(255, 255, 255)
+    contentStroke.Thickness = 1
+    contentStroke.Parent = tabContent
+
+    local contentTitle = Instance.new("TextLabel")
+    contentTitle.Size = UDim2.new(1, -20, 0, 25)
+    contentTitle.Position = UDim2.new(0, 10, 0, 8)
+    contentTitle.BackgroundTransparency = 1
+    contentTitle.Text = "Tab " .. i .. " Content"
+    contentTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+    contentTitle.TextSize = 13
+    contentTitle.Font = Enum.Font.GothamBold
+    contentTitle.ZIndex = 15
+    contentTitle.Parent = tabContent
+
+    local contentText = Instance.new("TextLabel")
+    contentText.Size = UDim2.new(1, -20, 1, -45)
+    contentText.Position = UDim2.new(0, 10, 0, 35)
+    contentText.BackgroundTransparency = 1
+    contentText.Text = "This is the content for Button " .. i .. ".\nVideo plays in background."
+    contentText.TextColor3 = Color3.fromRGB(200, 200, 200)
+    contentText.TextSize = 11
+    contentText.Font = Enum.Font.Gotham
+    contentText.TextWrapped = true
+    contentText.TextYAlignment = Enum.TextYAlignment.Top
+    contentText.ZIndex = 15
+    contentText.Parent = tabContent
+
+    table.insert(tabContents, tabContent)
+
+    tabBtn.MouseButton1Click:Connect(function()
+        for _, content in ipairs(tabContents) do
+            content.Visible = false
+        end
+        for _, btn in ipairs(tabButtons) do
+            btn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+        end
+        tabContent.Visible = true
+        tabBtn.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+    end)
+
+    tabBtn.MouseEnter:Connect(function()
+        if not tabContent.Visible then
+            TweenService:Create(tabBtn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(55, 55, 55)}):Play()
+        end
+    end)
+
+    tabBtn.MouseLeave:Connect(function()
+        if not tabContent.Visible then
+            TweenService:Create(tabBtn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(45, 45, 45)}):Play()
+        end
+    end)
+end
+
+local ToggleButton = Instance.new("ImageButton")
+ToggleButton.Name = "ToggleButton"
+ToggleButton.Size = UDim2.new(0, 45, 0, 45)
+ToggleButton.Position = UDim2.new(0, 20, 0, 20)
+ToggleButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+ToggleButton.Image = "rbxassetid://110077467099069"
+ToggleButton.ImageColor3 = Color3.fromRGB(255, 255, 255)
+ToggleButton.ScaleType = Enum.ScaleType.Fit
+ToggleButton.ZIndex = 100
+ToggleButton.Parent = ScreenGui
+
+local ToggleCorner = Instance.new("UICorner")
+ToggleCorner.CornerRadius = UDim.new(1, 0)
+ToggleCorner.Parent = ToggleButton
+
+local ToggleStroke = Instance.new("UIStroke")
+ToggleStroke.Color = Color3.fromRGB(255, 255, 255)
+ToggleStroke.Thickness = 2
+ToggleStroke.Parent = ToggleButton
+
+local ToggleGlow = Instance.new("UIStroke")
+ToggleGlow.Color = Color3.fromRGB(100, 200, 255)
+ToggleGlow.Thickness = 0
+ToggleGlow.Parent = ToggleButton
+
+local function makeDraggable(frame, dragHandle)
+    local dragging = false
+    local dragStart = nil
+    local startPos = nil
+
+    dragHandle.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or
+           input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = frame.Position
+
+            input.Changed:Connect(function()
+                if dragging then
+                    local delta = input.Position - dragStart
+                    frame.Position = UDim2.new(
+                        startPos.X.Scale, startPos.X.Offset + delta.X,
+                        startPos.Y.Scale, startPos.Y.Offset + delta.Y
+                    )
+                end
+            end)
+        end
+    end)
+
+    dragHandle.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or
+           input.UserInputType == Enum.UserInputType.Touch then
+            dragging = false
+        end
+    end)
+
+    frame:GetPropertyChangedSignal("Position"):Connect(function()
+        local absPos = frame.AbsolutePosition
+        local absSize = frame.AbsoluteSize
+        local screenSize = ScreenGui.AbsoluteSize
+
+        local newX = math.clamp(absPos.X, 0, math.max(0, screenSize.X - absSize.X))
+        local newY = math.clamp(absPos.Y, 0, math.max(0, screenSize.Y - absSize.Y))
+
+        if absPos.X ~= newX or absPos.Y ~= newY then
+            frame.Position = UDim2.new(0, newX, 0, newY)
+        end
+    end)
+end
+
+makeDraggable(MainFrame, TitleBar)
+makeDraggable(ToggleButton, ToggleButton)
+
+local guiVisible = false
+
+local function toggleGui()
+    guiVisible = not guiVisible
+
+    if guiVisible then
+        MainFrame.Visible = true
+        MainFrame.Size = UDim2.new(0, 0, 0, 0)
+
+        local tween = TweenService:Create(
+            MainFrame,
+            TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
+            {Size = UDim2.new(0, 360, 0, 240)}
+        )
+        tween:Play()
+
+        VideoFrame:Play()
+        TabContainer.Visible = true
+    else
+        for _, content in ipairs(tabContents) do
+            content.Visible = false
+        end
+        for _, btn in ipairs(tabButtons) do
+            btn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+        end
+        TabContainer.Visible = false
+        VideoFrame:Pause()
+
+        local tween = TweenService:Create(
+            MainFrame,
+            TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
+            {Size = UDim2.new(0, 0, 0, 0)}
+        )
+        tween:Play()
+
+        tween.Completed:Connect(function()
+            MainFrame.Visible = false
+        end)
+    end
+end
+
+ToggleButton.MouseEnter:Connect(function()
+    TweenService:Create(ToggleGlow, TweenInfo.new(0.2), {Thickness = 3}):Play()
+    TweenService:Create(ToggleButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(50, 50, 50)}):Play()
+end)
+
+ToggleButton.MouseLeave:Connect(function()
+    TweenService:Create(ToggleGlow, TweenInfo.new(0.2), {Thickness = 0}):Play()
+    TweenService:Create(ToggleButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(30, 30, 30)}):Play()
+end)
+
+ToggleButton.MouseButton1Click:Connect(toggleGui)
+
+CloseBtn.MouseButton1Click:Connect(function()
+    guiVisible = false
+    for _, content in ipairs(tabContents) do
+        content.Visible = false
+    end
+    for _, btn in ipairs(tabButtons) do
+        btn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+    end
+    TabContainer.Visible = false
+    VideoFrame:Pause()
+
+    local tween = TweenService:Create(
+        MainFrame,
+        TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
+        {Size = UDim2.new(0, 0, 0, 0)}
+    )
+    tween:Play()
+
+    tween.Completed:Connect(function()
+        MainFrame.Visible = false
+    end)
+end)
+
+VideoFrame.Ready:Connect(function()
+    if guiVisible then
+        VideoFrame:Play()
+    end
+end)
+
+VideoFrame.Ended:Connect(function()
+    VideoFrame.TimePosition = 0
+    VideoFrame:Play()
+end)
+
+RunService.RenderStepped:Connect(function()
+    if guiVisible and MainFrame.Visible and VideoFrame.IsLoaded then
+        if not VideoFrame.Playing then
+            VideoFrame:Play()
+        end
+    end
+end)
+
+MainFrame.Visible = false
+TabContainer.Visible = false
+
+for _, content in ipairs(tabContents) do
+    content.Visible = false
+end
+
+ToggleButton.Position = UDim2.new(0.5, -22, 0.5, -22)
